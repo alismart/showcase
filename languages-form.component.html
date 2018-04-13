@@ -1,0 +1,378 @@
+<div class="interface main-padding right-col">
+  <form *ngIf="editable; else elseBlock" class="form-horizontal" [formGroup]="languageAddForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <p style="font-size: 20px;color:#03253F;">Add Language</p>
+
+        <div>
+          <div>
+            <div class="row flex-center" style="margin-left: 1px;">
+              <div class="col-sm-11 col-xs-10 prev-border">
+                <div class="language">
+                  <div class="form-group">
+                    <div class="col-lg-11 col-sm-12">
+                      <div class="row focus-container has-feedback">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Language</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10">
+                          <p-dropdown formControlName="name" placeholder="Choose one" [options]="languages"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                          <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                          <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-11 col-sm-12">
+                      <div class="row align-bottom focus-container has-feedback">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Type</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-9">
+                          <div class="row">
+                            <div class="col-xs-6 col-xxs-12">
+                              <input formControlName="type" [checked]="languageAddForm.get('type').value=='Native'"
+                                     type="radio" class="radio-focus rad-mother-lang" name="type" value="Native"> Mother
+                              Language
+                            </div>
+                            <div class="col-xs-6 col-xxs-12">
+                              <input formControlName="type" type="radio" class="radio-focus rad-other-lang" name="type"
+                                     value="Other"> Other Language
+                            </div>
+                          </div>
+                          <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                          <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                  <div [hidden]="languageAddForm.get('type').value=='Native'">
+                    <div class="form-group">
+                      <div class="col-lg-12 col-sm-12">
+                        <fieldset>
+                          <legend>Self assessment</legend>
+                          <div class="row">
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10 col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Listening</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-headphones"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="listening" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10 col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Reading</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-book"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="reading" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Speaking</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-volume-up"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="speaking" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Writing</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-pencil-square-o"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="writing" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <br><br>
+                  </div>
+
+
+                </div>
+              </div>
+              <div class="col-sm-1 col-xs-2">
+                <button (click)="add()" class="btn btn-primary">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row div-margin-top-40 div-margin-bottom-45">
+          <div class="col-lg-12 col-sm-12" style="overflow-x: auto;">
+            <table class="table-preview">
+              <tr>
+                <th>Language</th>
+                <th>Type</th>
+                <th>Details</th>
+              </tr>
+              <tr *ngFor="let language of languagesForm.controls.languages.controls; let i=index">
+                <td>{{language.get('name').value}}</td>
+                <td>{{language.get('type').value}}</td>
+                <td>
+                  <button type="button" (click)="edit(i)" class="btn btn-success" data-toggle="modal"
+                          data-target="#myModal">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  <button (click)="remove(i)" class="btn btn-trash-cust">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+
+        <div class="form-group div-margin-top-70">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <button type="button" (click)="preview()" class="btn btn-info btn-block cust-btn">
+                  <i class="fa fa-eye"></i> &nbsp;Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template #elseBlock>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngFor="let lang of items; let i=index">
+          <div *ngIf="lang.type=='Native'">
+            <div class="row">
+              <!-- <div class="col-sm-3 col-xs-3 col-xxs-12">
+
+              </div> -->
+              <div class="col-sm-8 col-xs-9 col-xxs-12">
+                <p class="primaryp">
+                  {{lang.name}}
+                  <span class="secondaryp" style="font-size: small;">
+                            		( Native )
+                            	</span>
+                </p>
+              </div>
+            </div>
+
+            <hr [hidden]="i==items.length-1">
+          </div>
+
+          <div *ngIf="lang.type!='Native'">
+            <div class="row">
+              <!-- <div class="col-sm-3 col-xs-3 col-xxs-12">
+
+              </div> -->
+              <div class="col-sm-8 col-xs-9 col-xxs-12">
+                <p class="primaryp">
+                  {{lang.name}}
+
+                </p>
+                <fieldset>
+                  <legend>Self Assessment</legend>
+                  <div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10">
+                    <label class="control-label blue-label self-assess-text">Listening</label><br>
+                    <label class="control-label blue-label self-assess-icon"><i class="fa fa-headphones"
+                                                                                aria-hidden="true"></i></label><br>
+                    <label class="control-label">{{lang.listening}}</label>
+
+                  </div>
+                  <div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10">
+                    <label class="control-label blue-label self-assess-text">Reading</label><br>
+                    <label class="control-label blue-label self-assess-icon"><i class="fa fa-book"
+                                                                                aria-hidden="true"></i></label><br>
+                    <label class="control-label">{{lang.reading}}</label>
+                  </div>
+                  <div class="col-lg-3 col-xs-3 col-xxs-3 text-center">
+                    <label class="control-label blue-label self-assess-text">Speaking</label><br>
+                    <label class="control-label blue-label self-assess-icon"><i class="fa fa-volume-up"
+                                                                                aria-hidden="true"></i></label><br>
+                    <label class="control-label">{{lang.speaking}}</label>
+                  </div>
+                  <div class="col-lg-3 col-xs-3 col-xxs-3 text-center">
+                    <label class="control-label blue-label self-assess-text">Writing</label><br>
+                    <label class="control-label blue-label self-assess-icon"><i class="fa fa-pencil-square-o"
+                                                                                aria-hidden="true"></i></label><br>
+                    <label class="control-label">{{lang.writing}}</label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            <hr [hidden]="i==items.length-1">
+          </div>
+        </div>
+        <!--<div class="row">-->
+        <!--&lt;!&ndash; <div class="col-sm-3 col-xs-3 col-xxs-12">-->
+
+        <!--</div> &ndash;&gt;-->
+        <!--<div class="col-sm-8 col-xs-9 col-xxs-12">-->
+        <!--<p class="primaryp">-->
+        <!--Germany-->
+
+        <!--</p>-->
+        <!--<fieldset>-->
+        <!--<legend>Self Assessment</legend>-->
+        <!--<div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10">-->
+        <!--<label class="control-label blue-label self-assess-text">Listening</label><br>-->
+        <!--<label class="control-label blue-label self-assess-icon"><i class="fa fa-headphones" aria-hidden="true"></i></label><br>-->
+        <!--<label class="control-label">A1</label>-->
+
+        <!--</div>-->
+        <!--<div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10">-->
+        <!--<label class="control-label blue-label self-assess-text">Reading</label><br>-->
+        <!--<label class="control-label blue-label self-assess-icon"><i class="fa fa-book" aria-hidden="true"></i></label><br>-->
+        <!--<label class="control-label">A1</label>-->
+        <!--</div>-->
+        <!--<div class="col-lg-3 col-xs-3 col-xxs-3 text-center">-->
+        <!--<label class="control-label blue-label self-assess-text">Speaking</label><br>-->
+        <!--<label class="control-label blue-label self-assess-icon"><i class="fa fa-volume-up" aria-hidden="true"></i></label><br>-->
+        <!--<label class="control-label">A1</label>-->
+        <!--</div>-->
+        <!--<div class="col-lg-3 col-xs-3 col-xxs-3 text-center">-->
+        <!--<label class="control-label blue-label self-assess-text">Writing</label><br>-->
+        <!--<label class="control-label blue-label self-assess-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></label><br>-->
+        <!--<label class="control-label">A1</label>-->
+        <!--</div>-->
+        <!--</fieldset>-->
+        <!--</div>-->
+        <!--</div>-->
+
+      </div>
+    </div>
+
+    <div class="form-group div-margin-top-40">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+            <button type="button" (click)="editPreview()" class="btn btn-warning btn-block cust-btn">
+              <i class="fa fa-pencil-square-o"></i> &nbsp;Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+</div>
+<p-dialog header="Edit Language" [(visible)]="display" [modal]="true" [width]="800">
+  <div>
+    <div>
+      <div>
+        <div class="modal-body">
+          <form class="form-horizontal" [formGroup]="languageEditForm">
+            <div class="language">
+
+              <div>
+                <div>
+
+
+                  <div class="form-group">
+                    <div class="col-lg-11 col-sm-12">
+                      <div class="row focus-container has-feedback">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Language</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10">
+                          <p-dropdown formControlName="name" [options]="languages"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                          <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                          <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-11 col-sm-12">
+                      <div class="row align-bottom focus-container has-feedback">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Type</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-9">
+                          <div class="row">
+                            <div class="col-xs-6 col-xxs-12">
+                              <input formControlName="type" [checked]="languageEditForm.get('type').value=='Native'"
+                                     type="radio" class="radio-focus rad-mother-lang" name="type" value="Native"> Mother
+                              Language
+                            </div>
+                            <div class="col-xs-6 col-xxs-12">
+                              <input formControlName="type" [checked]="languageEditForm.get('type').value=='Other'"
+                                     type="radio" class="radio-focus rad-other-lang" name="type" value="Other"> Other
+                              Language
+                            </div>
+                          </div>
+                          <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                          <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
+                  <div [hidden]="languageEditForm.get('type').value=='Native'">
+                    <div class="form-group">
+                      <div class="col-lg-12 col-sm-12">
+                        <fieldset>
+                          <legend>Self assessment</legend>
+                          <div class="row">
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10 col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Listening</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-headphones"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="listening" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center margin-bo-mo-10 col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Reading</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-book"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="reading" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Speaking</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-volume-up"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="speaking" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-xxs-3 text-center col-lrpadd-8">
+                              <label class="control-label blue-label self-assess-text">Writing</label>
+                              <label class="control-label blue-label self-assess-icon"><i class="fa fa-pencil-square-o"
+                                                                                          aria-hidden="true"></i></label>
+                              <p-dropdown formControlName="writing" [options]="levels"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <br><br>
+                  </div>
+
+
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="display=false" class="btn btn-default">Close</button>
+          <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>

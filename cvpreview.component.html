@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CV Full Preview</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+  <!--<link rel="stylesheet" href="css/override_bootstrap.css">-->
+  <!--<link rel="stylesheet" href="css/font-awesome.min.css">-->
+  <!--<link rel="stylesheet" href="css/style12.css">-->
+</head>
+<body>
+<div class="">
+  <div class="col-xs-12 top-bar" style="vertical-align: middle">
+    <button (click)="createCV()" class="pull-left btn btn-danger"
+            style="margin-top:auto;margin-bottom: auto; margin-right:5px;"><h4>Create a new CV</h4></button>
+    <button routerLink="/cv/{{resumeId}}/personal-info" class="pull-left btn btn-warning"
+            style="margin-top:auto;margin-bottom: auto"><h4>Edit</h4></button>
+    <h3 class="interface-title">CV Full Preview</h3>
+    <div class="navbar2">
+      <ul>
+        <!--<li><a href="#"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a></li>-->
+        <li><a href="#"><img src="assets/images/user-profile100.png"></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div *ngIf="resume" class="wrapper preview-wrapper">
+
+
+  <div class="interface main-padding right-col">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-sm-12 preview-style">
+
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-6">
+                <div class="user-pro-pic-preview">
+                  <img id="pro-pic" src="assets/images/Untitled-1.png" class="img-responsive">
+                </div>
+              </div>
+
+              <div *ngIf="resume.personal_info" class="col-lg-9 col-sm-9 col-xs-8 col-xxs-6" style="padding: 0;">
+                <h2 style="font-weight: 800;">{{resume.personal_info.first_name}} {{resume.personal_info.middle_name}}
+                  {{resume.personal_info.last_name}}</h2>    <!-- First Name + Middle Name + Last Name  -->
+                <h3 style="margin-top: 0;">{{resume.personal_info.resume_title}}
+                  &nbsp;
+                  <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/personal-info">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                  </button>
+                </h3>
+              </div>
+            </div>
+          </div>
+
+
+          <hr>
+          <!--<div style="background-color: red">{{drivingCats}}</div>-->
+          <div class="form-group" *ngIf="resume.personal_info">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-6 left-col-preview-alignright">
+                  <p>Birth Info:</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-6">
+                  <p><i class="fa fa-calendar" aria-hidden="true"></i> {{resume.personal_info.date_of_birth | date}} -
+                    {{resume.personal_info.city_of_birth}}, {{resume.personal_info.country_of_birth}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-6 left-col-preview-alignright">
+                  <p>Gender:</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-6">
+                  <p [hidden]="resume.personal_info.gender!='m'"><i class="fa fa-mars" aria-hidden="true"></i> Male</p>
+                  <p [hidden]="resume.personal_info.gender!='f'"><i class="fa fa-venus" aria-hidden="true"></i> Female
+                  </p>
+
+                </div>
+              </div>
+              <div class="row" *ngFor="let nat of resume.personal_info.nationalities; let i=index">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-6 left-col-preview-alignright">
+                  <p [hidden]="i!=0">Nationality:</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-6">
+                  <p><img src="assets/countries/{{mapper[nat.nationality]}}.gif"> {{nat.nationality}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-6 left-col-preview-alignright">
+                  <p>Marital Status:</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-6">
+                  <p>{{resume.personal_info.marital_status | titlecase}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-6 left-col-preview-alignright">
+                  <p>Current Location:</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-6">
+                  <p><i class="fa fa-map-marker" aria-hidden="true"></i> {{resume.personal_info.current_city}},
+                    {{resume.personal_info.current_country}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-6 left-col-preview-alignright">
+                  <p>Visa Status:</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-6">
+                  <p>{{resume.personal_info.visa_status}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <h3><i class="fa fa-phone" aria-hidden="true"></i> Contact Information
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/contact-info">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+
+          <hr>
+
+          <div class="form-group">
+            <div class="col-lg-12 col-sm-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row" *ngIf="resume.contact_info.phone_numbers.length">
+                    <div class="col-lg-5 col-md-5 col-sm-3 col-xs-4 col-xxs-3 left-col-preview-alignright">
+                      <p>Contact Number</p>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-9 col-xs-8 col-xxs-9">
+                      <p *ngFor="let phone of resume.contact_info.phone_numbers"><i class="fa fa-phone"
+                                                                                    aria-hidden="true"></i> <span
+                        class="secondaryp">{{phone.phone_type}}: </span> ({{phone.int_code}}) {{phone.number}}</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="resume.contact_info.messengers.length">
+                    <div class="col-lg-5 col-md-5 col-sm-3 col-xs-4 col-xxs-3 left-col-preview-alignright">
+                      <p>Instant Messaging</p>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-9 col-xs-8 col-xxs-9">
+                      <p *ngFor="let m of resume.contact_info.messengers">
+                        <i class="fa fa-{{m.messenger_provider}}" aria-hidden="true"></i>
+                        {{m.messenger_account}}
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="row" *ngIf="resume.contact_info.emails.length">
+                    <div class="col-lg-5 col-md-5 col-sm-3 col-xs-4 col-xxs-3 left-col-preview-alignright">
+                      <p>E-mails</p>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-9 col-xs-8 col-xxs-9">
+                      <p *ngFor="let e of resume.contact_info.emails"><i class="fa fa-envelope-o"
+                                                                         aria-hidden="true"></i> <span
+                        class="secondaryp">{{e.email_type | titlecase}}: </span> {{e.email_address}}</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="resume.contact_info.websites.length">
+                    <div class="col-lg-5 col-md-5 col-sm-3 col-xs-4 col-xxs-3 left-col-preview-alignright">
+                      <p>Website</p>
+                    </div>
+                    <div class="col-lg-7 col-md-5 col-sm-9 col-xs-8 col-xxs-9">
+                      <p *ngFor="let w of resume.contact_info.websites"><i class="fa fa-globe" aria-hidden="true"></i>
+                        {{w.website_address}}</p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="resume.contact_info.networks.length">
+                    <div class="col-lg-5 col-md-5 col-sm-3 col-xs-4 col-xxs-3 left-col-preview-alignright">
+                      <p>Social Media</p>
+                    </div>
+                    <div class="col-lg-7 col-md-5 col-sm-9 col-xs-8 col-xxs-9">
+                      <p *ngFor="let sn of resume.contact_info.networks"><i class="fa fa-{{sn.network_type}}"
+                                                                            aria-hidden="true"></i>
+                        {{sn.network_address}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-sticky-note-o" aria-hidden="true"></i> Summary
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/summary">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngIf="resume.summary">
+                <div class="col-lg-9 col-sm-9 col-xs-12 col-xxs-12 col-lg-offset-3 col-sm-offset-3 col-xxs-offset-0">
+                  <p class="description" style="white-space: pre-wrap;word-wrap:break-word;">
+                    {{resume.summary.description}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-graduation-cap" aria-hidden="true"></i> Education
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/education">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div *ngFor="let ed of resume.education" class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12">
+                  <p class="date-col">{{ed.start_date | date:'MM/yyyy'}} <i class="fa fa-arrow-right"
+                                                                            aria-hidden="true"></i> <span
+                    [hidden]="!ed.completion_date">{{ed.completion_date| date:'MM/yyyy'}}</span><span
+                    [hidden]="ed.completion_date">present</span></p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{ed.degree_level}},{{ed.major}}</p>    <!-- Degree Level + Major   -->
+                  <p><span class="secondaryp">At </span>{{ed.college}} <span *ngIf="ed.location"><i
+                    class="fa fa-map-marker secondaryp" aria-hidden="true"></i> {{ed.location}}</span></p>
+                  <!-- University/School + Location   -->
+                  <p *ngIf="ed.grade && ed.full_grade"><span class="secondaryp">Grade: </span>{{ed.grade}} <span
+                    class="secondaryp">out of </span> {{ed.full_grade}} <span class="secondaryp">{{(ed.grade/ed.full_grade)*100 | round}}%</span>
+                  </p>   <!-- Grade + Full Grade   -->
+                  <p *ngIf="ed.college_website"><span class="secondaryp">Website: </span><a
+                    href="{{ed.college_website}}">{{ed.college_website}}</a></p>
+                  <p *ngIf="ed.description"><span class="secondaryp">Description: </span>{{ed.description}}</p>
+                  <p *ngIf="ed.subject"><span class="secondaryp">Subject: </span>{{ed.subject}}</p>
+                  <fieldset *ngIf="ed.academic_researches.length">
+                    <legend>Projects</legend>
+                    <div *ngFor="let research of ed.academic_researches; let j=index">
+                      <p><span class="secondaryp">Title Of Project: </span>{{research.project_title}}</p>
+                      <p><span class="secondaryp">Description: </span>{{research.project_description}}</p>
+                      <hr [hidden]="j==ed.academic_researches.length-1">
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <h3><i class="fa fa-briefcase" aria-hidden="true"></i> Work Experience
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/work">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let w of resume.work">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12">
+                  <p class="date-col">{{w.from_date | date:'MM/yyyy'}} <i class="fa fa-arrow-right"
+                                                                          aria-hidden="true"></i> {{w.to_date |
+                    date:'MM/yyyy'}}</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{w.job_role}}</p>   <!-- Job Role  -->
+                  <p><span class="secondaryp">At </span>{{w.co_name}} <i class="fa fa-map-marker secondaryp"
+                                                                         aria-hidden="true"></i> {{w.location}}</p>
+                  <!-- Company Name + Location  -->
+                  <p><span class="secondaryp">Company Industry: </span>{{w.co_industry}}</p>
+                  <p *ngIf="w.emp_type"><span class="secondaryp">Employment Type: </span>{{w.emp_type}}</p>
+                  <p *ngIf="w.job_description" class="description"><span
+                    class="secondaryp">Describe What You Did : </span> {{w.job_description}}</p>
+                  <!-- Describe What You Did   -->
+                  <p *ngIf="w.co_size"><span class="secondaryp">Company Size: </span>{{w.co_size}}</p>
+                  <p *ngIf="w.last_salary"><span class="secondaryp">Salary: </span>{{w.last_salary}}</p>
+                  <p *ngIf="w.co_description" class="description"><span class="secondaryp">Company Description: </span>
+                    {{w.co_description}}</p>    <!-- Describe What You Did   -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-pencil" aria-hidden="true"></i> Skills
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/skills">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let s of resume.skills">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12">
+                  <p class="date-col">{{s.start_date | date:'MM/yyyy' }} <i class="fa fa-arrow-right"
+                                                                            aria-hidden="true"></i> {{s.completion_date
+                    | date:'MM/yyyy' }}</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{s.name}} &nbsp;
+                    <span data-toggle="tooltip" title="{{s.level}}" [hidden]="s.level!='Intermediate'"><i
+                      class="fa fa-star skill-level-yellow" aria-hidden="true"></i>&nbsp;<i
+                      class="fa fa-star skill-level-yellow" aria-hidden="true"></i>&nbsp;<i
+                      class="fa fa-star skill-level-black" aria-hidden="true"></i></span>
+                    <span data-toggle="tooltip" title="{{s.level}}" [hidden]="s.level!='Beginner'"><i
+                      class="fa fa-star skill-level-yellow" aria-hidden="true"></i>&nbsp;<i
+                      class="fa fa-star skill-level-black" aria-hidden="true"></i>&nbsp;<i
+                      class="fa fa-star skill-level-black" aria-hidden="true"></i></span>
+                    <span data-toggle="tooltip" title="{{s.level}}" [hidden]="s.level!='Expert'"><i
+                      class="fa fa-star skill-level-yellow" aria-hidden="true"></i>&nbsp;<i
+                      class="fa fa-star skill-level-yellow" aria-hidden="true"></i>&nbsp;<i
+                      class="fa fa-star skill-level-yellow" aria-hidden="true"></i></span>
+                  </p>  <!-- Skill +Skill level  -->
+                  <p class="description"><span class="secondaryp">Description: </span>{{s.description}}</p>
+                  <!-- Description -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-language" aria-hidden="true"></i> Languages
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/languages">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group" *ngIf="resume.languages.length">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 text-center left-col-preview">
+                  <p>Mother Language</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p *ngFor="let lang of resume.languages" [hidden]="lang.type!='Native'">{{lang.name}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 text-center left-col-preview">
+                  <p>Other Language</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p *ngFor="let lang of resume.languages" [hidden]="lang.type=='Native'">{{lang.name}} &nbsp;&nbsp;( <i
+                    class="fa fa-headphones" aria-hidden="true" data-toggle="tooltip" title="Listening"></i>
+                    {{lang.listening}}, <i class="fa fa-book" aria-hidden="true" data-toggle="tooltip"
+                                           title="Reading"></i> {{lang.reading}}, <i class="fa fa-volume-up"
+                                                                                     aria-hidden="true"
+                                                                                     data-toggle="tooltip"
+                                                                                     title="Speaking"></i>
+                    {{lang.speaking}}, <i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="tooltip"
+                                          title="Writing"></i> {{lang.writing}} )</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-car" aria-hidden="true"></i> Driving Licence
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/driving-license">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group" *ngIf="resume.driving_license">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 left-col-preview">
+                  <p>International Licence</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p><span class="secondaryp">From </span> <img src="assets/countries/syria.gif">
+                    {{resume.driving_license.int_country}}</p>   <!-- Country  -->
+                  <p><span class="secondaryp">Valid For </span> {{resume.driving_license.int_valid_date |
+                    date:'MM/yyyy'}}</p>   <!-- valid for  -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 left-col-preview">
+                  <p>Local Licence</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p><span class="secondaryp">From </span> <img src="assets/countries/syria.gif"> Syria , (
+                    {{drivingCats[0]}} <img src="assets/images/drivingicons/{{drivingCats[0]}}.png"
+                                            style="height:18px;"> <span
+                      *ngFor="let x of drivingCats.slice(1)">, {{x}} <img src="assets/images/drivingicons/{{x}}.png"
+                                                                          style="height:18px;"></span> ) </p>
+                  <!-- Country  -->
+                  <p><span class="secondaryp">Valid For </span> 05/2027</p>   <!-- valid for  -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> Professional Certification
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/certification">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let c of resume.certification">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 text-center">
+                  <p class="date-col">{{c.receipt_date | date:'dd/MM/yyyy'}}</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{c.title}}</p>    <!-- Title  -->
+                  <p><span class="secondaryp">Unique Number: </span>{{c.unique_number}} , <span class="secondaryp">URL Code: </span>
+                    {{c.url_code}}</p>    <!-- unique number + url code  -->
+                  <p><span class="secondaryp">From </span> {{c.authority}}</p>   <!-- Authority  -->
+                  <p><span class="secondaryp">Valid Until </span> {{c.valid_date | date:'dd/MM/yyyy'}}</p>
+                  <!-- Authority  -->
+                  <p class="description"><span class="secondaryp">Description: </span>{{c.summary}}
+                  </p>   <!-- Summary  -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-star-half-o" aria-hidden="true"></i> Achievements
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/achievements">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let x of resume.achievements">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 text-center">
+                  <p class="date-col">{{x.from_date|date:'MM/yyyy'}} <i class="fa fa-arrow-right"
+                                                                        aria-hidden="true"></i>
+                    {{x.to_date|date:'MM/yyyy'}}</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{x.name}}</p>    <!-- Achievement Name  -->
+                  <p><span class="secondaryp">Achievement URl: </span>{{x.url}}</p>        <!-- Achievement URl   -->
+                  <p><span class="secondaryp">Type Of Achievement: </span>{{x.type}}</p>
+                  <!-- Type Of Achievement   -->
+                  <p class="description"><span class="secondaryp">Description: </span>{{x.description}}
+                  </p>    <!-- Description  -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-copy" aria-hidden="true"></i> Publications
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/publications">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let x of resume.publications">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 text-center">
+                  <p class="date-col">{{x.from_date|date:'MM/yyyy'}} <i class="fa fa-arrow-right"
+                                                                        aria-hidden="true"></i>
+                    {{x.to_date|date:'MM/yyyy'}}</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{x.name}}</p>    <!-- Publication Name  -->
+                  <p><span class="secondaryp">Publication URL: </span>{{x.url}}</p>         <!-- Publication URL  -->
+                  <p><span class="secondaryp">Type Of Publication: </span>{{x.type}}</p>
+                  <!-- Type Of Publication  -->
+                  <p class="description"><span class="secondaryp">Description: </span>{{x.description}}
+                  </p>   <!-- Description  -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-certificate" aria-hidden="true"></i> Training
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/training">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let x of resume.training">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 text-center">
+                  <p class="date-col">{{x.from_date|date:'dd/MM/yyyy'}} <i class="fa fa-arrow-right"
+                                                                           aria-hidden="true"></i>
+                    {{x.to_date|date:'dd/MM/yyyy'}}</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{x.title}}</p>    <!-- Training Title  -->
+                  <p><span class="secondaryp">At </span>{{x.source}} - {{x.total_hours}} hour</p>
+                  <!-- Training Source +  Total hours  -->
+                  <p *ngIf="x.description" class="description"><span class="secondaryp">Description: </span>{{x.description}}
+                  </p>  <!-- Description  -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-flag" aria-hidden="true"></i> Memeberships & Volunters
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/memberships">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let x of resume.memberships">
+                <div class="col-lg-3 col-sm-3 col-xs-4 col-xxs-12 text-center">
+                  <p class="date-col">{{x.from_date|date:'MM/yyyy'}} <i class="fa fa-arrow-right"
+                                                                        aria-hidden="true"></i>
+                    {{x.to_date|date:'MM/yyyy'}}</p>
+                </div>
+                <div class="col-lg-9 col-sm-9 col-xs-8 col-xxs-12">
+                  <p class="primaryp">{{x.membership_name}} <span class="secondaryp">At </span>{{x.organization_name}}
+                  </p>   <!-- Membership + Organization name  -->
+                  <p *ngIf="x.location"><i class="fa fa-map-marker secondaryp" aria-hidden="true"></i> {{x.location}}
+                  </p>  <!-- Location  -->
+                  <p *ngIf="x.description" class="description"><span class="secondaryp">Description: </span>{{x.description}}
+                  </p>   <!-- Description  -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-bicycle" aria-hidden="true"></i> Hobbies and Interests
+            &nbsp;
+            <button type="button" class="btn btn-default btn-sm" routerLink="/cv/{{resumeId}}/hobbies">
+              <span class="glyphicon glyphicon-pencil"></span> Edit
+            </button>
+          </h3>
+          <hr>
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row" *ngFor="let x of resume.hobbies">
+                <div class="col-lg-9 col-sm-9 col-xs-12 col-xxs-12 col-lg-offset-3 col-sm-offset-3 col-xxs-offset-0">
+                  <p class="primaryp"><i class="fa fa-dot-circle-o" aria-hidden="true"></i> {{x.name}}</p>
+                  <!-- Hobby  -->
+                  <p *ngIf="x.description" class="description"><span class="secondaryp">Description: </span>{{x.description}}
+                  </p>   <!-- Description  -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+
+</div>
+<p-dialog header="CV created!" [(visible)]="display" [modal]="true" [width]="800">
+  <div>
+    <div>
+      <div>
+        <div class="modal-body" style="padding-top:0">
+          <h2>A new CV has been created! Click 'OK' to be forwarded to the 'Personal Info' screen of your new CV.</h2>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="display=false" class="btn btn-default">Close</button>
+          <button type="button" routerLink="/cv/personal-info" class="btn btn-primary">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>
+<p-dialog header="Error!" [(visible)]="displayError" [modal]="true" [width]="800">
+  <div>
+    <div>
+      <div>
+        <div class="modal-body" style="padding-top:0">
+          <h2>An Error has occured while creating a new CV!</h2>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="displayError=false" class="btn btn-primary">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>
+<!--<script src="js/jquery-3.1.1.min.js"></script>-->
+<!--<script src="js/bootstrap.min.js"></script>-->
+<!--<script src="js/custom11.js"></script>-->
+<!--<script>-->
+<!--$('[data-toggle="tooltip"]').tooltip({trigger: "hover",placement:"top"});-->
+<!--</script>-->
+</body>
+</html>

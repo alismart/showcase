@@ -1,0 +1,366 @@
+<div class="interface main-padding right-col">
+  <form *ngIf="editable; else elseBlock" class="form-horizontal" [formGroup]="skillsForm">
+    <div class="row" formArrayName="skills">
+      <div class="col-sm-12">
+
+        <p style="font-size: 20px;color:#03253F;">Add Skill</p>
+
+        <div *ngFor="let skill of skillsForm.controls.skills.controls; let i=index; let last=last">
+          <div [formGroupName]="i" [hidden]="i!=skillsForm.controls.skills.controls.length-1">
+
+            <div class="row flex-center" style="margin-left: 1px;">
+              <div class="col-sm-11 col-xs-10 prev-border">
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="row focus-container has-feedback">
+                      <div class="col-lg-2 col-sm-2 alignment-right">
+                        <label class="control-label">Your Skill</label>
+                      </div>
+                      <div class="col-lg-9 col-sm-10">
+                        <input type="text" class="form-control" formControlName="name">
+                        <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                        <span class="error-message"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="row focus-container has-feedback">
+                      <div class="col-lg-2 col-sm-2 alignment-right">
+                        <label class="control-label">Skill Level</label>
+                      </div>
+                      <div class="col-lg-9 col-sm-10">
+                        <p-dropdown formControlName="level" [options]="levels" placeholder="Choose one"
+                                    [style]="{'width':'100%'}"></p-dropdown>
+
+                        <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                        <span class="error-message"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group margin-top-mo-25">
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="row focus-container has-feedback">
+                      <div class="col-lg-2 col-sm-2 alignment-right">
+                        <label class="control-label">Since</label>
+                      </div>
+                      <div class="col-lg-9 col-sm-10">
+                        <div class="row">
+                          <div class="col-sm-6 margin-bo-mo-10">
+                            <div class="row">
+                              <div class="custom-col-2-3 alignment-right-mob">
+                                <label class="control-label label-bot-bit">From</label>
+                              </div>
+                              <div class="custom-col-3-4 col-no-padding-left">
+                                <p-dropdown formControlName="start_year" [options]="years" placeholder="YYYY"
+                                            [style]="{'width':'100%'}"></p-dropdown>
+
+                              </div>
+                              <div class="custom-col-3-4 col-no-padding-left">
+                                <p-dropdown formControlName="start_month" [options]="months" placeholder="MM"
+                                            [style]="{'width':'100%'}"></p-dropdown>
+
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6 margin-bo-mo-10">
+                            <div class="row">
+                              <div class="custom-col-2-3 alignment-right-mob text-center">
+                                <label class="control-label label-bot-bit">To</label>
+                              </div>
+                              <div class="custom-col-3-4 col-no-padding-left">
+                                <p-dropdown formControlName="completion_year" [options]="completion_years"
+                                            [style]="{'width':'100%'}"></p-dropdown>
+
+                              </div>
+                              <div class="custom-col-3-4 col-no-padding-left">
+                                <p-dropdown formControlName="completion_month" [options]="months" placeholder="MM"
+                                            [style]="{'width':'100%'}"></p-dropdown>
+
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <span class="error-message"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="row focus-container">
+                      <div class="col-lg-2 col-sm-2 alignment-right">
+                        <label class="control-label">Description</label>
+                      </div>
+                      <div class="col-lg-9 col-sm-10">
+                        <textarea pInputTextarea formControlName="description" maxlength="4000" #description
+                                  class="form-control" rows="5"></textarea>
+                        <p class="text-area-p">{{4000-description.value.length}} characters remaining</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-sm-1 col-xs-2">
+                <button (click)="add()" class="btn btn-primary">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row div-margin-top-40 div-margin-bottom-45">
+          <div class="col-lg-12 col-sm-12" style="overflow-x: auto;">
+            <table class="table-preview">
+              <tr>
+                <th>Your Skill</th>
+                <th>Skill Level</th>
+                <th colspan="2">Since</th>
+                <th>Details</th>
+              </tr>
+              <tr *ngFor="let skill of skillsForm.controls.skills.controls; let i=index; let last=last"
+                  [hidden]="i==skillsForm.controls.skills.controls.length-1">
+                <td>{{skill.get('name').value}}</td>
+                <td>{{skill.get('level').value}}</td>
+                <td>{{skill.get('start_year').value}}</td>
+                <td>{{skill.get('completion_year').value}}</td>
+                <td>
+                  <button type="button" (click)="edit(i)" class="btn btn-success" data-toggle="modal"
+                          data-target="#myModal">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  <button (click)="remove(i)" class="btn btn-trash-cust">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+        <div class="form-group div-margin-top-70">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <button type="button" (click)="preview()" class="btn btn-info btn-block cust-btn">
+                  <i class="fa fa-eye"></i> &nbsp;Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template #elseBlock>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngFor="let s of items; let i=index">
+          <div class="row">
+            <div class="col-sm-3 col-xs-3 col-xxs-12">
+              <p class="date-col" *ngIf="s.start_date">{{s.start_date | date:'MM/yyyy' }} - <span
+                [hidden]="!s.completion_date">{{s.completion_date | date:'MM/yyyy' }}</span><span
+                [hidden]="s.completion_date">present</span></p>
+            </div>
+            <div class="col-sm-8 col-xs-9 col-xxs-12">
+              <p class="primaryp">
+                {{s.name}}
+                <span class="secondaryp" data-toggle="tooltip" title="{{s.level}}" [hidden]="s.level!='Intermediate'"><i
+                  class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i
+                  class="fa fa-star-o" aria-hidden="true"></i></span>
+                <span class="secondaryp" data-toggle="tooltip" title="{{s.level}}" [hidden]="s.level!='Beginner'"><i
+                  class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star-o"
+                                                                     aria-hidden="true"></i>&nbsp;<i
+                  class="fa fa-star-o" aria-hidden="true"></i></span>
+                <span class="secondaryp" data-toggle="tooltip" title="{{s.level}}" [hidden]="s.level!='Expert'"><i
+                  class="fa fa-star" aria-hidden="true"></i>&nbsp;<i class="fa fa-star" aria-hidden="true"></i>&nbsp;<i
+                  class="fa fa-star" aria-hidden="true"></i></span>
+              </p>
+
+
+              <p class="description">
+                {{s.description}}
+              </p>
+
+            </div>
+          </div>
+
+          <hr [hidden]="i==items.length-1">
+        </div>
+
+        <!--<div class="row">-->
+        <!--<div class="col-sm-3 col-xs-3 col-xxs-12">-->
+        <!--<p class="date-col">03/2014 - 04/2017</p>-->
+        <!--</div>-->
+        <!--<div class="col-sm-8 col-xs-9 col-xxs-12">-->
+        <!--<p class="primaryp">-->
+        <!--Playing Basketball-->
+        <!--<span class="secondaryp">-->
+        <!--<i class="fa fa-star"></i>-->
+        <!--<i class="fa fa-star"></i>-->
+        <!--<i class="fa fa-star-o"></i>-->
+        <!--</span>-->
+        <!--</p>-->
+
+
+        <!--<p class="description">-->
+        <!--This Project Corodinator job description template is ready to post on online job boards. Customize with key project coordinator duties and responsibilities.-->
+        <!--</p>-->
+
+        <!--</div>-->
+        <!--</div>-->
+
+
+      </div>
+    </div>
+    <div class="form-group div-margin-top-40">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+            <button type="button" (click)="editPreview()" class="btn btn-warning btn-block cust-btn">
+              <i class="fa fa-pencil-square-o"></i> &nbsp;Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+</div>
+
+
+<p-dialog header="Edit Skill" [(visible)]="display" [modal]="true" [width]="800" [positionTop]="65">
+  <div class="modal-body">
+    <form class="form-horizontal" [formGroup]="skillEditForm">
+      <div class="row">
+
+        <div>
+          <div>
+
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="col-lg-10 col-sm-12">
+                  <div class="row focus-container has-feedback">
+                    <div class="col-lg-3 col-sm-2 alignment-right">
+                      <label class="control-label">Your Skill</label>
+                    </div>
+                    <div class="col-lg-9 col-sm-10">
+                      <input type="text" class="form-control" formControlName="name">
+                      <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                      <span class="error-message"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-lg-10 col-sm-12">
+                  <div class="row focus-container has-feedback">
+                    <div class="col-lg-3 col-sm-2 alignment-right">
+                      <label class="control-label">Skill Level</label>
+                    </div>
+                    <div class="col-lg-9 col-sm-10">
+                      <p-dropdown formControlName="level" [options]="levels" placeholder="Choose one"
+                                  [style]="{'width':'100%'}"></p-dropdown>
+
+                      <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                      <span class="error-message"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group margin-top-mo-25">
+                <div class="col-lg-10 col-sm-12">
+                  <div class="row focus-container has-feedback">
+                    <div class="col-lg-3 col-sm-2 alignment-right">
+                      <label class="control-label">Since</label>
+                    </div>
+                    <div class="col-lg-9 col-sm-10">
+                      <div class="row">
+                        <div class="col-sm-6 margin-bo-mo-10">
+                          <div class="row">
+                            <div class="custom-col-2-3 alignment-right-mob">
+                              <label class="control-label label-bot-bit">From</label>
+                            </div>
+                            <div class="custom-col-3-4 col-no-padding-left">
+                              <p-dropdown formControlName="start_year" [options]="years" placeholder="YYYY"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+
+                            </div>
+                            <div class="custom-col-3-4 col-no-padding-left">
+                              <p-dropdown formControlName="start_month" [options]="months" placeholder="MM"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 margin-bo-mo-10">
+                          <div class="row">
+                            <div class="custom-col-2-3 alignment-right-mob text-center">
+                              <label class="control-label label-bot-bit">To</label>
+                            </div>
+                            <div class="custom-col-3-4 col-no-padding-left">
+                              <p-dropdown formControlName="completion_year"
+                                          [style]="{'width':'100%'}" [options]="completion_years"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+
+                            </div>
+                            <div class="custom-col-3-4 col-no-padding-left">
+                              <p-dropdown formControlName="completion_month" [options]="months" placeholder="MM"
+                                          [style]="{'width':'100%'}"></p-dropdown>
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-lg-10 col-sm-12">
+                  <div class="row focus-container">
+                    <div class="col-lg-3 col-sm-2 alignment-right">
+                      <label class="control-label">Description</label>
+                    </div>
+                    <div class="col-lg-9 col-sm-10">
+                      <textarea pInputTextarea formControlName="description" maxlength="4000" #description
+                                class="form-control" rows="5"></textarea>
+                      <p class="text-area-p">{{4000-description.value.length}} characters remaining</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <p-footer>
+    <div class="modal-footer">
+      <button type="button" (click)="display=false" class="btn btn-default">Close</button>
+      <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+    </div>
+
+  </p-footer>
+</p-dialog>

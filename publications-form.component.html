@@ -1,0 +1,374 @@
+<div class="interface main-padding right-col">
+  <form *ngIf="editable; else elseBlock" class="form-horizontal" [formGroup]="addForm">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <p style="font-size: 20px;color:#03253F;">Add Publication</p>
+        <div class="row flex-center" style="margin-left: 1px;">
+          <div class="col-sm-11 col-xs-10 prev-border">
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Publication Name</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <input formControlName="name" type="text" class="form-control">
+                    <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Type Of Publication</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <input formControlName="type" type="text" class="form-control">
+                    <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group margin-top-mo-25">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Publication Date</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6 margin-bo-mo-10">
+                        <div class="row">
+                          <div class="custom-col-2-3 alignment-right-mob">
+                            <label class="control-label label-bot-bit">From</label>
+                          </div>
+                          <div class="custom-col-3-4 col-no-padding-left">
+                            <p-dropdown formControlName="from_year" [options]="years" placeholder="YYYY"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                          <div class="custom-col-3-4 col-no-padding-left">
+                            <p-dropdown formControlName="from_month" [options]="months" placeholder="MM"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 margin-bo-mo-10">
+                        <div class="row">
+                          <div class="custom-col-2-3 alignment-right-mob text-center">
+                            <label class="control-label label-bot-bit">To</label>
+                          </div>
+                          <div class="custom-col-3-4 col-no-padding-left">
+                            <p-dropdown formControlName="to_year" [options]="toyears" placeholder="YYYY"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                          <div class="custom-col-3-4 col-no-padding-left">
+                            <p-dropdown formControlName="to_month" [options]="months" placeholder="MM"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <span class="error-message"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Publication URL</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <input formControlName="url" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Description</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <textarea formControlName="description" maxlength="4000" #desc class="form-control"
+                              rows="5"></textarea>
+                    <p class="text-area-p">{{4000-desc.value.length}} characters remaining</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 col-xs-3 col-xxs-5 alignment-right">
+                    <label class="control-label">Upload</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10 col-xs-9 col-xxs-7">
+                    <button class="btn btn-primary">
+                      <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-1 col-xs-2 text-center">
+            <button (click)="add()" class="btn btn-primary">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <div class="row div-margin-top-40 div-margin-bottom-45">
+          <div class="col-lg-12 col-sm-12" style="overflow-x: auto;">
+            <table class="table-preview">
+              <tr>
+                <th>Publication Name</th>
+                <th>Publication Type</th>
+                <th colspan="2">Date</th>
+                <th>Details</th>
+              </tr>
+              <tr *ngFor="let item of mainForm.controls.items.controls; let i=index">
+                <td>{{item.get('name').value}}</td>
+                <td>{{item.get('type').value}}</td>
+                <td>{{item.get('from_year').value}}</td>
+                <td>{{item.get('to_year').value}}</td>
+                <td>
+                  <button (click)="edit(i)" type="button" class="btn btn-success">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  <button (click)="remove(i)" class="btn btn-trash-cust">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+
+
+            </table>
+          </div>
+        </div>
+        <div class="form-group div-margin-top-70">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <button type="button" (click)="preview()" class="btn btn-info btn-block cust-btn">
+                  <i class="fa fa-eye"></i> &nbsp;Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template #elseBlock>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngFor="let x of items; let i=index">
+          <div class="row">
+            <div class="col-sm-3 col-xs-3 col-xxs-12">
+              <p class="date-col" *ngIf="x.to_date">
+                <span class="secondaryp">At: </span>
+                {{x.to_date|date:'MM/yyyy'}}
+              </p>
+            </div>
+            <div class="col-sm-8 col-xs-9 col-xxs-12">
+              <p class="primaryp" *ngIf="x.name">
+                {{x.name}}
+              </p>
+              <p *ngIf="x.type">
+                <span class="secondaryp">type: </span>
+                {{x.type}}
+              </p>
+
+              <p class="description" *ngIf="x.description">
+                {{x.description}}
+              </p>
+
+              <p *ngIf="x.url">
+                <a href="{{x.url}}">link for the Publication</a>
+              </p>
+
+            </div>
+          </div>
+
+          <hr [hidden]="i==items.length-1">
+        </div>
+      </div>
+    </div>
+    <div class="form-group div-margin-top-40">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+            <button type="button" (click)="editPreview()" class="btn btn-warning btn-block cust-btn">
+              <i class="fa fa-pencil-square-o"></i> &nbsp;Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<p-dialog header="Edit Publication" [(visible)]="display" [modal]="true" [width]="800">
+  <div>
+    <div>
+      <div>
+        <div class="modal-body">
+          <form class="form-horizontal" [formGroup]="editForm">
+            <div class="language">
+
+              <div>
+                <div>
+
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="row focus-container has-feedback">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Publication Name</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10">
+                          <input formControlName="name" type="text" class="form-control">
+                          <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                          <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="row focus-container has-feedback">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Type Of Publication</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10">
+                          <input formControlName="type" type="text" class="form-control">
+                          <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                          <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group margin-top-mo-25">
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="row focus-container has-feedback">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Publication Date</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10">
+                          <div class="row">
+                            <div class="col-sm-6 margin-bo-mo-10">
+                              <div class="row">
+                                <div class="custom-col-2-3 alignment-right-mob">
+                                  <label class="control-label label-bot-bit">From</label>
+                                </div>
+                                <div class="custom-col-3-4 col-no-padding-left">
+                                  <p-dropdown formControlName="from_year" [options]="years" placeholder="YYYY"
+                                              [style]="{'width':'100%'}"></p-dropdown>
+                                </div>
+                                <div class="custom-col-3-4 col-no-padding-left">
+                                  <p-dropdown formControlName="from_month" [options]="months" placeholder="MM"
+                                              [style]="{'width':'100%'}"></p-dropdown>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-6 margin-bo-mo-10">
+                              <div class="row">
+                                <div class="custom-col-2-3 alignment-right-mob text-center">
+                                  <label class="control-label label-bot-bit">To</label>
+                                </div>
+                                <div class="custom-col-3-4 col-no-padding-left">
+                                  <p-dropdown formControlName="to_year" [options]="toyears" placeholder="YYYY"
+                                              [style]="{'width':'100%'}"></p-dropdown>
+                                </div>
+                                <div class="custom-col-3-4 col-no-padding-left">
+                                  <p-dropdown formControlName="to_month" [options]="months" placeholder="MM"
+                                              [style]="{'width':'100%'}"></p-dropdown>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-12">
+                              <span class="error-message"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="row focus-container">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Publication URL</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10">
+                          <input formControlName="url" type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="row focus-container">
+                        <div class="col-lg-3 col-sm-2 alignment-right">
+                          <label class="control-label">Description</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10">
+                          <textarea formControlName="description" maxlength="4000" #desc2 class="form-control"
+                                    rows="5"></textarea>
+                          <p class="text-area-p">{{4000-desc2.value.length}} characters remaining</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="row focus-container">
+                        <div class="col-lg-3 col-sm-2 col-xs-3 col-xxs-5 alignment-right">
+                          <label class="control-label">Upload</label>
+                        </div>
+                        <div class="col-lg-9 col-sm-10 col-xs-9 col-xxs-7">
+                          <button class="btn btn-primary">
+                            <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="display=false" class="btn btn-default">Close</button>
+          <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>

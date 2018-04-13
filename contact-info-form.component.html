@@ -1,0 +1,429 @@
+<div class="interface main-padding right-col">
+  <form *ngIf="editable; else elseBlock" class="form-horizontal" (ngSubmit)="save()" [formGroup]="contactInfoForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group" formArrayName="phone_numbers">
+          <div class="col-sm-12">
+            <div *ngFor="let phonenumber of contactInfoForm.controls.phone_numbers.controls; let i=index">
+              <div class="row focus-container has-feedback">
+                <div class="col-sm-2 alignment-right">
+                  <label class="control-label" [hidden]="i!=0">Contact Number</label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="row" [formGroupName]="i">
+                    <div class="col-sm-3 col-xs-12 margin-bo-mo-10">
+                      <p-dropdown formControlName="phone_type" [style]="{'width':'100%'}"
+                                  [options]="phoneTypes"></p-dropdown>
+                    </div>
+                    <div class="col-sm-7 col-xs-10 col-xxs-12 margin-bo-mo-10">
+                      <div class="row">
+                        <div class="col-sm-4 col-xs-4" style="padding-right:0;">
+                          <p-dropdown formControlName="int_code" [style]="{'width':'80%'}" [options]="intCodes"
+                                      [filter]="true">
+                            <ng-template let-code pTemplate="item">
+                              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                <img src="assets/countries/{{codeMapper[code.value]}}.gif"
+                                     style="width:24px;position:absolute;top:1px;left:5px"/>
+                                <div style="font-size:14px;float:right;margin-top:4px">{{code.label}}</div>
+                              </div>
+                            </ng-template>
+                          </p-dropdown>
+                        </div>
+                        <div class="col-sm-8 col-xs-8" style="padding-left:0;">
+                          <input type="text" formControlName="number" class="form-control">
+                          <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div [hidden]="i!=0" class="col-sm-2 col-xs-2 col-xxs-12 addmore-btn">
+                      <button type="button" class="btn btn-primary" (click)="addPhoneNumber()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div [hidden]="i==0" class="col-sm-2 col-xs-2 col-xxs-12 trash-btn">
+                      <button type="button" class="btn btn-primary" (click)="removePhoneNumber(i)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div *ngIf="formErrors.phone_numbers" class="col-xs-10">
+                    <span class="error-message alert alert-danger">
+                      {{formErrors.phone_numbers}}
+                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br [hidden]="i==contactInfoForm.controls.phone_numbers.controls.length-1">
+            </div>
+
+
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group" formArrayName="emails">
+          <div class="col-sm-12">
+            <div *ngFor="let email of contactInfoForm.controls.emails.controls; let i=index">
+              <div class="row focus-container has-feedback" [formGroupName]="i">
+                <div class="col-sm-2 alignment-right">
+                  <label class="control-label" [hidden]="i!=0">E-mails</label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-3 col-xs-12 margin-bo-mo-10">
+                      <p-dropdown formControlName="email_type" [style]="{'width':'100%'}"
+                                  [options]="emailTypes"></p-dropdown>
+                    </div>
+                    <div class="col-sm-7 col-xs-10 col-xxs-12 margin-bo-mo-10">
+                      <input type="email" class="form-control" formControlName="email_address">
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="col-sm-2 col-xs-2 col-xxs-12 addmore-btn" [hidden]="i!=0">
+                      <button type="button" class="btn btn-primary" (click)="addEmail()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div [hidden]="i==0" class="col-sm-2 col-xs-2 col-xxs-12 trash-btn">
+                      <button type="button" class="btn btn-primary" (click)="removeEmail(i)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div class="col-xs-12">
+                      <span class="error-message"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br [hidden]="i==contactInfoForm.controls.emails.controls.length-1">
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group" formArrayName="websites">
+          <div class="col-sm-12">
+            <div *ngFor="let website of contactInfoForm.controls.websites.controls; let i=index">
+              <div class="row focus-container has-feedback">
+                <div class="col-sm-2 alignment-right">
+                  <label class="control-label" [hidden]="i!=0">Website</label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="row" [formGroupName]="i">
+                    <div class="col-sm-10 col-xs-10 col-xxs-12 margin-bo-mo-10">
+                      <input type="text" class="form-control has-error" formControlName="website_address">
+                      <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div [hidden]="i!=0" class="col-sm-2 col-xs-2 col-xxs-12 addmore-btn">
+                      <button type="button" class="btn btn-primary" (click)="addWebsite()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div [hidden]="i==0" class="col-sm-2 col-xs-2 col-xxs-12 trash-btn">
+                      <button type="button" class="btn btn-primary" (click)="removeWebsite(i)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="col-xs-12">
+                      <span class="error-message"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br [hidden]="i==contactInfoForm.controls.websites.length-1">
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <div class="form-group" formArrayName="networks">
+          <div class="col-sm-12">
+            <div *ngFor="let network of contactInfoForm.controls.networks.controls; let i=index">
+              <div class="row focus-container has-feedback" [formGroupName]="i">
+                <div class="col-sm-2 alignment-right">
+                  <label class="control-label" [hidden]="i!=0">Social Media</label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-3 col-xs-12 margin-bo-mo-10">
+                      <p-dropdown formControlName="network_type" [style]="{'width':'100%'}" [options]="networkTypes"
+                                  [filter]="true">
+                        <ng-template let-network pTemplate="item">
+                          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <img src="assets/socialmedia/{{network.value}}.png"
+                                 style="width:24px;position:absolute;top:1px;left:5px"/>
+                            <div style="font-size:14px;float:right;margin-top:4px">{{network.label}}</div>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+                    </div>
+                    <div class="col-sm-7 col-xs-10 col-xxs-12 margin-bo-mo-10">
+                      <input type="text" class="form-control" formControlName="network_address">
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <!--<div class="col-sm-3 col-xs-8">-->
+                    <!--&lt;!&ndash;<label class="radio-inline">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="radio" [checked]="i==0" name="mainemail" formControlName="mainemail" value="true" class="radio-focus"> Main E-mail&ndash;&gt;-->
+                    <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                    <!--</div>-->
+                    <div class="col-sm-2 col-xs-2 col-xxs-12 addmore-btn" [hidden]="i!=0">
+                      <button type="button" class="btn btn-primary" (click)="addNetwork()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </div>
+
+                    <div [hidden]="i==0" class="col-sm-2 col-xs-2 col-xxs-12 trash-btn">
+                      <button type="button" class="btn btn-primary" (click)="removeNetwork(i)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="col-xs-12">
+                      <span class="error-message"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br [hidden]="i==contactInfoForm.controls.networks.controls.length-1">
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group" formArrayName="messengers">
+          <div class="col-sm-12">
+            <div *ngFor="let messenger of contactInfoForm.controls.messengers.controls; let i=index">
+              <div class="row focus-container has-feedback" [formGroupName]="i">
+                <div class="col-sm-2 alignment-right">
+                  <label class="control-label" [hidden]="i!=0">Instant Messaging</label>
+                </div>
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-3 col-xs-12 margin-bo-mo-10">
+                      <p-dropdown formControlName="messenger_provider" [style]="{'width':'100%'}"
+                                  [options]="messengerProviders" [filter]="true">
+                        <ng-template let-messenger pTemplate="item">
+                          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <img src="assets/instantmsg/{{messenger.label}}.png"
+                                 style="width:24px;position:absolute;top:1px;left:5px"/>
+                            <div style="font-size:14px;float:right;margin-top:4px">{{messenger.label}}</div>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+                    </div>
+                    <div class="col-sm-7 col-xs-10 col-xxs-12 margin-bo-mo-10">
+                      <input type="text" class="form-control" formControlName="messenger_account">
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-sm-2 col-xs-2 col-xxs-12 addmore-btn" [hidden]="i!=0">
+                      <button type="button" class="btn btn-primary" (click)="addMessenger()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div [hidden]="i==0" class="col-sm-2 col-xs-2 col-xxs-12 trash-btn">
+                      <button type="button" class="btn btn-primary" (click)="removeMessenger(i)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="col-xs-12">
+                      <span class="error-message"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br [hidden]="i==contactInfoForm.controls.messengers.controls.length-1">
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+
+        <div class="form-group div-margin-top-40">
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+                <button type="submit" class="btn btn-success btn-block cust-btn">
+                  <i class="fa fa-floppy-o"></i> &nbsp;Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+
+  <ng-template #elseBlock>
+
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-sm-12">
+          <div *ngFor="let phone of contactInfo.phone_numbers; let i=index">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3 col-xs-4 col-xxs-12 alignment-right">
+                    <label class="control-label bold-label" [hidden]="i!=0">Contact Number:</label>
+                  </div>
+                  <div class="col-sm-9 col-xs-8 col-xxs-12">
+                    <div class="row">
+                      <div class="col-sm-4 col-xs-6 col-xxs-6">
+                        <label class="control-label user-input">
+                          <ng-template [ngIf]="phone.phone_type=='main-mobile'||phone.phone_type=='main-mobile' ">
+                            <i class="fa fa-mobile main-phone-email" aria-hidden="true"></i>
+                            Main Mobile
+                          </ng-template>
+                          <ng-template [ngIf]="phone.phone_type=='personal-mobile'||phone.phone_type=='work-mobile' ">
+                            <i class="fa fa-mobile main-phone-email" aria-hidden="true"></i>
+                            Personal Mobile
+                          </ng-template>
+                          <ng-template [ngIf]="phone.phone_type=='home'||phone.phone_type=='work'">
+                            <i class="fa fa-phone main-phone-email" aria-hidden="true"></i>
+                            Work Phone
+                          </ng-template>
+                        </label>
+                      </div>
+                      <div class="col-sm-4 col-xs-6 col-xxs-6">
+                        <label class="control-label user-input">{{phone.int_code}}-{{phone.number}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div *ngFor="let email of contactInfo.emails; let i=index">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3 col-xs-4 col-xxs-12 alignment-right">
+                    <label class="control-label bold-label" [hidden]="i!=0">E-mails:</label>
+                  </div>
+                  <div class="col-sm-9 col-xs-8 col-xxs-12">
+                    <div class="row">
+                      <ng-template [ngIf]="email.email_type=='main'">
+                        <div class="col-sm-4 col-xs-6 col-xxs-6">
+                          <label class="control-label user-input"><i class="fa fa-envelope-o main-phone-email"
+                                                                     aria-hidden="true"></i> Main</label>
+                        </div>
+                      </ng-template>
+                      <ng-template [ngIf]="email.email_type=='personal'">
+                        <div class="col-sm-4 col-xs-6 col-xxs-6">
+                          <label class="control-label user-input"><i class="fa fa-envelope-o main-phone-email"
+                                                                     aria-hidden="true"></i> Personal</label>
+                        </div>
+                      </ng-template>
+                      <ng-template [ngIf]="email.email_type=='work'">
+                        <div class="col-sm-4 col-xs-6 col-xxs-6">
+                          <label class="control-label user-input"><i class="fa fa-envelope-o main-phone-email"
+                                                                     aria-hidden="true"></i> Work</label>
+                        </div>
+                      </ng-template>
+                      <div class="col-sm-4 col-xs-6 col-xxs-6">
+                        <label class="control-label user-input">{{email.email_address}}</label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div *ngFor="let website of contactInfo.websites;let i=index">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3 col-xs-4 col-xxs-12 alignment-right">
+                    <label class="control-label bold-label" [hidden]="i!=0">Website:</label>
+                  </div>
+                  <div class="col-sm-9 col-xs-8 col-xxs-12">
+                    <label class="control-label user-input"><i class="fa fa-globe" aria-hidden="true"></i>
+                      {{website.website_address}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div *ngFor="let network of contactInfo.networks; let i=index">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3 col-xs-4 col-xxs-12 alignment-right">
+                    <label class="control-label bold-label" [hidden]="i!=0">Social Media:</label>
+                  </div>
+                  <div class="col-sm-9 col-xs-8 col-xxs-12">
+                    <label class="control-label user-input">
+                      <i *ngIf="network.network_type=='facebook'" class="fa fa-facebook" aria-hidden="true"></i>
+                      <i *ngIf="network.network_type=='twitter'" class="fa fa-twitter" aria-hidden="true"></i>
+                      <i *ngIf="network.network_type=='linkedin'" class="fa fa-linkedin" aria-hidden="true"></i>
+                      <i *ngIf="network.network_type=='youtube'" class="fa fa-youtube" aria-hidden="true"></i>
+                      {{network.network_address}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div *ngFor="let messenger of contactInfo.messengers; let i=index">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3 col-xs-4 col-xxs-12 alignment-right">
+                    <label class="control-label bold-label" [hidden]="i!=0">Instant Messaging:</label>
+                  </div>
+                  <div class="col-sm-9 col-xs-8 col-xxs-12 user-input">
+                    <label class="control-label user-input">
+                      <i *ngIf="messenger.messenger_provider=='whatsapp'" class="fa fa-whatsapp" aria-hidden="true"></i>
+                      <i *ngIf="messenger.messenger_provider=='telegram'" class="fa fa-telegram" aria-hidden="true"></i>
+                      <i *ngIf="messenger.messenger_provider=='skype'" class="fa fa-skype" aria-hidden="true"></i>
+                      {{messenger.messenger_account}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group div-margin-top-40">
+            <div class="col-sm-8">
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+                  <button type="button" (click)="edit()" class="btn btn-warning btn-block cust-btn">
+                    <i class="fa fa-pencil-square-o"></i> &nbsp;Edit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+  </ng-template>
+
+</div>
+

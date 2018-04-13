@@ -1,0 +1,387 @@
+<div class="interface main-padding right-col">
+  <form *ngIf="editable; else elseBlock" class="form-horizontal" [formGroup]="addForm">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <p style="font-size: 20px;color:#03253F;">Add Training</p>
+        <div class="row flex-center" style="margin-left: 1px;">
+          <div class="col-sm-11 col-xs-10 prev-border">
+
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-2 col-sm-2 alignment-right">
+                    <label class="control-label">Training Title</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <input formControlName="title" type="text" class="form-control">
+                    <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-2 col-sm-2 alignment-right">
+                    <label class="control-label">Training Source</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <input formControlName="source" type="text" class="form-control">
+                    <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group margin-top-mo-25">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-2 col-sm-2 alignment-right">
+                    <label class="control-label">Date</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6 margin-bo-mo-10">
+                        <div class="row">
+                          <div class="col-xs-3 alignment-right-mob">
+                            <label class="control-label label-bot-bit">From</label>
+                          </div>
+                          <div class="col-xs-3 col-no-padding-left">
+                            <p-dropdown formControlName="from_year" [options]="years" placeholder="YYYY"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                          <div class="col-xs-3 col-no-padding-left">
+                            <p-dropdown formControlName="from_month" [options]="months" placeholder="MM"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                          <div class="col-xs-3 col-no-padding-left">
+                            <p-dropdown formControlName="from_day" [options]="days" placeholder="DD"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 margin-bo-mo-10">
+                        <div class="row">
+                          <div class="col-xs-3 alignment-right-mob text-center">
+                            <label class="control-label label-bot-bit">To</label>
+                          </div>
+                          <div class="col-xs-3 col-no-padding-left">
+                            <p-dropdown formControlName="to_year" [options]="toyears" placeholder="YYYY"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                          <div class="col-xs-3 col-no-padding-left">
+                            <p-dropdown formControlName="to_month" [options]="months" placeholder="MM"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                          <div class="col-xs-3 col-no-padding-left">
+                            <p-dropdown formControlName="to_day" [options]="days" placeholder="DD"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-2 col-sm-2 alignment-right">
+                    <label class="control-label">Total hours </label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <input formControlName="total_hours" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-1 col-xs-2 text-center">
+            <button (click)="add()" class="btn btn-primary">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <div class="row div-margin-top-40 div-margin-bottom-45">
+          <div class="col-lg-12 col-sm-12" style="overflow-x: auto;">
+            <table class="table-preview">
+              <tr>
+                <th>Training Title</th>
+                <th>Source</th>
+                <th colspan="2">Date</th>
+                <th>Total Hourse</th>
+                <th>Details</th>
+              </tr>
+              <tr *ngFor="let item of mainForm.controls.items.controls; let i = index">
+                <td>{{item.get('title').value}}</td>
+                <td>{{item.get('source').value}}</td>
+                <td>{{item.get('from_day').value}}/{{item.get('from_month').value}}/{{item.get('from_year').value}}</td>
+                <td>{{item.get('to_day').value}}/{{item.get('to_month').value}}/{{item.get('to_year').value}}</td>
+                <td>{{item.get('total_hours').value}}</td>
+                <td>
+                  <button type="button" (click)="edit(i)" class="btn btn-success">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  <button (click)="remove(i)" class="btn btn-trash-cust">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+        <div class="form-group div-margin-top-70">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <button type="button" (click)="preview()" class="btn btn-info btn-block cust-btn">
+                  <i class="fa fa-eye"></i> &nbsp;Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template #elseBlock>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngFor="let x of items; let i=index">
+          <div class="row">
+            <div class="col-sm-3 col-xs-3 col-xxs-12">
+              <p class="date-col">{{x.from_date|date:'MM/yyyy'}} - <span [hidden]="!x.to_date">{{x.to_date|date:'MM/yyyy'}}</span><span
+                [hidden]="x.to_date">present</span></p>
+            </div>
+            <div class="col-sm-8 col-xs-9 col-xxs-12">
+              <p class="primaryp" *ngIf="x.title">
+                {{x.title}}
+              </p>
+
+              <p>
+              <span *ngIf="x.source">
+                <span class="secondaryp">in: </span>
+                {{x.source}}
+              </span>
+                <span *ngIf="x.total_hours">
+                <span class="secondaryp">(</span>
+                {{x.total_hours}}
+                <span class="secondaryp">Hours)</span>
+              </span>
+              </p>
+              <p>
+
+
+              <p *ngIf="x.description" class="description">
+                {{x.description}}
+              </p>
+
+              <br>
+
+            </div>
+          </div>
+          <hr [hidden]="i==items.length-1">
+        </div>
+
+
+        <!--<div class="row">-->
+        <!--<div class="col-sm-3 col-xs-3 col-xxs-12">-->
+        <!--<p class="date-col">03/2014 - 04/2017</p>-->
+        <!--</div>-->
+        <!--<div class="col-sm-8 col-xs-9 col-xxs-12">-->
+        <!--<p class="primaryp">-->
+        <!--Attend a training course in the computer field-->
+        <!--</p>-->
+
+        <!--<p>-->
+        <!--<span class="secondaryp">in: </span>-->
+        <!--Creative Solution-->
+        <!--<span class="secondaryp">(</span>-->
+        <!--30-->
+        <!--<span class="secondaryp">Hours)</span>-->
+        <!--</p>-->
+        <!--<p>-->
+
+
+        <!--<p class="description">-->
+        <!--This Project Corodinator job description template is ready to post on online job boards. Customize with key project coordinator duties and responsibilities.-->
+        <!--</p>-->
+        <!--</p>-->
+
+        <!--<br>-->
+
+        <!--</div>-->
+        <!--</div>-->
+
+
+      </div>
+    </div>
+
+    <div class="form-group div-margin-top-40">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+            <button type="button" (click)="editPreview()" class="btn btn-warning btn-block cust-btn">
+              <i class="fa fa-pencil-square-o"></i> &nbsp;Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+<p-dialog header="Edit Training" [(visible)]="display" [modal]="true" [width]="1130" [height]="590" [positionTop]="65">
+  <div class="modal-body">
+    <form class="form-horizontal" [formGroup]="editForm">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container has-feedback">
+                <div class="col-lg-3 col-sm-2 alignment-right">
+                  <label class="control-label">Training Title</label>
+                </div>
+                <div class="col-lg-9 col-sm-10">
+                  <input formControlName="title" type="text" class="form-control">
+                  <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container has-feedback">
+                <div class="col-lg-3 col-sm-2 alignment-right">
+                  <label class="control-label">Training Source</label>
+                </div>
+                <div class="col-lg-9 col-sm-10">
+                  <input formControlName="source" type="text" class="form-control">
+                  <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group margin-top-mo-25">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container">
+                <div class="col-lg-3 col-sm-2 alignment-right">
+                  <label class="control-label">Date</label>
+                </div>
+                <div class="col-lg-9 col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-6 margin-bo-mo-10">
+                      <div class="row">
+                        <div class="col-xs-3 alignment-right-mob">
+                          <label class="control-label label-bot-bit">From</label>
+                        </div>
+                        <div class="col-xs-3 col-no-padding-left">
+                          <p-dropdown formControlName="from_year" [options]="years" placeholder="YYYY"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                        <div class="col-xs-3 col-no-padding-left">
+                          <p-dropdown formControlName="from_month" [options]="months" placeholder="MM"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                        <div class="col-xs-3 col-no-padding-left">
+                          <p-dropdown formControlName="from_day" [options]="days" placeholder="DD"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 margin-bo-mo-10">
+                      <div class="row">
+                        <div class="col-xs-3 alignment-right-mob text-center">
+                          <label class="control-label label-bot-bit">To</label>
+                        </div>
+                        <div class="col-xs-3 col-no-padding-left">
+                          <p-dropdown formControlName="to_year" [options]="toyears" placeholder="YYYY"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                        <div class="col-xs-3 col-no-padding-left">
+                          <p-dropdown formControlName="to_month" [options]="months" placeholder="MM"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                        <div class="col-xs-3 col-no-padding-left">
+                          <p-dropdown formControlName="to_day" [options]="days" placeholder="DD"
+                                      [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container">
+                <div class="col-lg-3 col-sm-2 alignment-right">
+                  <label class="control-label">Total hours </label>
+                </div>
+                <div class="col-lg-9 col-sm-10">
+                  <input formControlName="total_hours" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container">
+                <div class="col-lg-3 col-sm-2 alignment-right">
+                  <label class="control-label">Description</label>
+                </div>
+                <div class="col-lg-9 col-sm-10">
+                  <textarea formControlName="description" #desc2 class="form-control" rows="5"></textarea>
+                  <p class="text-area-p">{{4000-desc2.value.length}} characters remaining</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container">
+                <div class="col-lg-3 col-sm-2 col-xs-3 col-xxs-5 alignment-right">
+                  <label class="control-label">Upload</label>
+                </div>
+                <div class="col-lg-9 col-sm-10 col-xs-9 col-xxs-7">
+                  <button class="btn btn-primary">
+                    <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" (click)="display=false" class="btn btn-default">Close</button>
+    <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+  </div>
+
+
+</p-dialog>

@@ -1,0 +1,164 @@
+<div class="interface main-padding right-col">
+  <form *ngIf="editable; else elseBlock" class="form-horizontal" [formGroup]="hobbyAddForm">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <p style="font-size: 20px;color:#03253F;">Add Hobby</p>
+        <div class="row flex-center" style="margin-left: 1px;">
+          <div class="col-sm-11 col-xs-10 prev-border">
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-2 col-sm-2 alignment-right">
+                    <label class="control-label">Hobby</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <input formControlName="name" type="text" class="form-control" id="exampleInputName2">
+                    <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-12 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-2 col-sm-2 alignment-right">
+                    <label class="control-label">Description</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <textarea formControlName="description" #description maxlength="400" class="form-control"
+                              rows="5"></textarea>
+                    <p class="text-area-p">{{400-description.value.length}} characters remaining</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1 col-xs-2">
+            <button (click)="add()" class="btn btn-primary">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+
+        <div class="row div-margin-top-40 div-margin-bottom-45">
+          <div class="col-lg-12 col-sm-12" style="overflow-x: auto;">
+            <table class="table-preview">
+              <tr>
+                <th>Hobby</th>
+                <th>Details</th>
+              </tr>
+              <tr *ngFor="let hobby of hobbiesForm.controls.hobbies.controls; let i=index">
+                <td>{{hobby.get('name').value}}</td>
+                <td>
+                  <button type="button" (click)="edit(i)" class="btn btn-success">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  <button (click)="remove(i)" class="btn btn-trash-cust">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+
+        <div class="form-group div-margin-top-70">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <button type="button" (click)="preview()" class="btn btn-info btn-block cust-btn">
+                  <i class="fa fa-eye"></i> &nbsp;Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template #elseBlock>
+    <div *ngFor="let x of items; let i=index">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-3 col-xs-3 col-xxs-12">
+              <p class="col-txt-right"> Hobby {{i+1}}</p>
+            </div>
+            <div class="col-sm-8 col-xs-9 col-xxs-12">
+              <p class="primaryp">{{x.name}}</p>
+              <p class="description">{{x.description}}</p>  <!-- describtion -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr [hidden]="i==items.length-1">
+    </div>
+    <div class="form-group div-margin-top-40">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+            <button type="button" (click)="editPreview()" class="btn btn-warning btn-block cust-btn">
+              <i class="fa fa-pencil-square-o"></i> &nbsp;Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+<p-dialog header="Edit Language" [(visible)]="display" [modal]="true" [width]="800">
+  <div>
+    <div>
+      <div>
+        <div class="modal-body">
+          <form class="form-horizontal" [formGroup]="hobbyEditForm">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="row focus-container has-feedback">
+                      <div class="col-lg-2 col-sm-2 alignment-right">
+                        <label class="control-label">Hobby</label>
+                      </div>
+                      <div class="col-lg-9 col-sm-10">
+                        <input formControlName="name" type="text" class="form-control">
+                        <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                        <span class="error-message"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="row focus-container">
+                      <div class="col-lg-2 col-sm-2 alignment-right">
+                        <label class="control-label">Description</label>
+                      </div>
+                      <div class="col-lg-9 col-sm-10">
+                        <textarea formControlName="description" #description2 maxlength="400" class="form-control"
+                                  rows="5"></textarea>
+                        <p class="text-area-p">{{400-description2.value.length}} characters remaining</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="display=false" class="btn btn-default">Close</button>
+          <button type="button" (click)="save()" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>

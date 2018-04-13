@@ -1,0 +1,605 @@
+<div class="interface main-padding right-col">
+  <form [hidden]="!edit" class="form-horizontal" (ngSubmit)="createPersonalInfo()" [formGroup]="personalInfoForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row flex_row">
+          <div class="col-sm-8 col_flex1">
+            <div class="row">
+              <div class="custom-row clearfix focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Title Before</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <p-dropdown [style]="{'width':'100%'}" [options]="titles" formControlName="titlebefore"
+                              required></p-dropdown>
+                </div>
+              </div>
+
+              <div class="custom-row clearfix has-feedback focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">First Name</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" formControlName="firstname" class="form-control" data-toggle="tooltip"
+                         title="Please write your first name as shown in passport">
+                  <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+              <div>
+                <h5></h5>
+              </div>
+
+              <div class="custom-row clearfix has-feedback focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Middle Name</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="middlename">
+                  <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+
+              <div class="custom-row clearfix has-feedback focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Last Name</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="lastname" data-toggle="tooltip"
+                         data-placement="right" title="Please write your last name as shown in passport">
+                  <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+
+              <div class="custom-row clearfix focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Title After</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="titleafter">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-sm-4 col_flex2">
+            <div class="user-pro-pic text-center">
+              <img id="pro-pic" src="assets/images/user150.png" class="img-responsive">
+              <a class="user-pic-link"><i class="fa fa-upload" aria-hidden="true"></i> Upload your photo</a>
+              <span class="error-message"></span>
+            </div>
+
+          </div>
+        </div>
+        <div
+          [hidden]="(personalInfoForm.controls['firstname'].untouched || personalInfoForm.controls['lastname'].pristine || personalInfoForm.controls['firstname'].invalid || personalInfoForm.controls['lastname'].invalid )"
+          class="row div-margin-bottom">
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Prefered View Name</label>
+                </div>
+                <div class="col-sm-4">
+                  <input type="radio" class="radio-focus" [checked]="true" name="prefvname" value="f"
+                         formControlName="prefvname">{{personalInfoForm.controls['firstname'].value}}&nbsp;{{personalInfoForm.controls['lastname'].value}}
+                </div>
+                <div class="col-sm-4">
+                  <input type="radio" class="radio-focus" name="prefvname" value="l" formControlName="prefvname">{{personalInfoForm.controls['lastname'].value}}&nbsp;{{personalInfoForm.controls['firstname'].value}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-8">
+            <div class="row focus-container">
+              <div class="col-sm-4 alignment-right">
+                <label class="control-label">Resume Title</label>
+              </div>
+              <div class="col-sm-8 focus-no-padding">
+                <input type="text" class="form-control" formControlName="resumetitle">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4"></div>
+
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-8">
+            <div class="row align-bottom has-feedback focus-container">
+              <div class="col-sm-4 alignment-right">
+                <label class="control-label">Gender</label>
+              </div>
+              <div class="col-sm-4">
+                <input type="radio" class="radio-focus" name="gender" value="m" formControlName="gender">Male
+              </div>
+              <div class="col-sm-4">
+                <input type="radio" class="radio-focus" name="gender" value="f" formControlName="gender">Female
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-4">
+                <span class="error-message"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-8">
+            <div class="row focus-container">
+              <div class="col-sm-4 alignment-right">
+                <label class="control-label">Marital Status</label>
+              </div>
+              <div class="col-sm-8 focus-no-padding">
+                <p-dropdown [style]="{'width':'100%'}" [options]="maritals"
+                            formControlName="maritalstatus"></p-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div formArrayName="nationalities">
+          <div style="margin-bottom:5px;"
+               *ngFor="let mynationality of personalInfoForm.controls.nationalities.controls; let i=index">
+            <div class="form-group has-feedback">
+              <div class="col-sm-8">
+                <div class="row focus-container">
+                  <div class="col-sm-4 alignment-right">
+                    <label class="control-label" [hidden]="i!=0">Nationality</label>
+                  </div>
+                  <div [formGroupName]="i" class="col-lg-7 col-sm-6 col-xs-9">
+
+                    <span tooltip="If you have more than one Nationality (passport), please press add more button"
+                          placement="right" delay="500">
+                      <p-dropdown [options]="nats" formControlName="nationality" [style]="{'width':'100%'}"
+                                  placeholder="&#45;&#45; unspecified &#45;&#45;" [filter]="true">
+                      <ng-template let-nat pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                          <img src="assets/countries/{{mapper[nat.label]}}.gif"
+                               style="width:24px;position:absolute;top:1px;left:5px"/>
+                          <div style="font-size:14px;float:right;margin-top:4px">{{nat.label}}</div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                    </span>
+                  </div>
+                  <div [hidden]="i!=0" class="col-lg-1 col-sm-2 col-xs-3 focus-no-padding">
+                    <button class="btn btn-primary rounded-corner-button" type="button" (click)="addNationality()">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div [hidden]="i==0" class="col-lg-1 col-sm-2 col-xs-3 focus-no-padding">
+                    <button class="btn btn-primary rounded-corner-button" (click)="removeNationality(i)">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  <div class="col-sm-8 col-sm-offset-4">
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group has-feedback">
+          <div class="col-sm-8">
+            <div class="row focus-container">
+              <div class="col-sm-4 alignment-right">
+                <label class="control-label">Date Of Birth</label>
+              </div>
+              <div class="custom-col-3 col-no-padding focus-no-padding">
+                <p-dropdown [options]="years" placeholder="Year" formControlName="dateofbirth_year"
+                            [style]="{width: '100%'}" [filter]="true"></p-dropdown>
+
+              </div>
+              <div class="custom-col-3 col-no-padding focus-no-padding">
+                <p-dropdown [options]="months" placeholder="Month" formControlName="dateofbirth_month"
+                            [style]="{width: '100%'}" [filter]="true"></p-dropdown>
+              </div>
+              <div class="custom-col-3 focus-no-padding focus-no-padding">
+                <p-dropdown [options]="days" placeholder="Day" formControlName="dateofbirth_day"
+                            [style]="{width: '100%'}" [filter]="true"></p-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-4">
+                <span class="error-message"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group flex_row">
+          <div class="col-sm-8 col_flex1">
+            <div class="row">
+              <div class="custom-row clearfix has-feedback focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Place Of Birth</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" #pobsearch placeholder="search for place" required>
+                  <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+              <div class="custom-row clearfix">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Country</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="countryofbirth">
+                </div>
+              </div>
+
+              <div class="custom-row clearfix">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">City</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="cityofbirth">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4 col_flex2">
+
+            <agm-map [latitude]="latitude1" [longitude]="longitude1" [zoom]="zoom1">
+              <agm-marker [markerDraggable]="true" (dragEnd)="dragEnded($event)" [latitude]="latitude1"
+                          [longitude]="longitude1"></agm-marker>
+            </agm-map>
+
+          </div>
+        </div>
+
+
+        <div class="row flex_row div-margin-bottom-15">
+          <div class="col-sm-8 col_flex1">
+            <div class="row">
+              <div class="custom-row clearfix has-feedback focus-container">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Current Location</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" #cpsearch placeholder="search for location">
+                  <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+
+              <div class="custom-row clearfix">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Country</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="currentcountry">
+                </div>
+              </div>
+
+              <div class="custom-row clearfix">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">City</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="currentcity">
+                </div>
+              </div>
+
+              <div class="custom-row clearfix">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Postal Code</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="postalcode">
+                </div>
+              </div>
+
+              <div class="custom-row clearfix">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">Street Address</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  <input type="text" class="form-control" formControlName="streetaddress">
+                </div>
+              </div>
+
+              <div class="custom-row clearfix">
+                <div class="col-sm-4 alignment-right">
+                  <label class="control-label">( Latitude , Longitude )</label>
+                </div>
+                <div class="col-sm-8 focus-no-padding">
+                  ({{latitude2}},{{longitude2}})
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-4 col_flex2">
+
+            <agm-map [latitude]="latitude2" [longitude]="longitude2" [zoom]="zoom2">
+              <agm-marker [markerDraggable]="true" (dragEnd)="dragEnded2($event)" [latitude]="latitude2"
+                          [longitude]="longitude2"></agm-marker>
+            </agm-map>
+
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-8">
+            <div class="row focus-container">
+              <div class="col-sm-4 alignment-right">
+                <label class="control-label">Visa Status</label>
+              </div>
+              <div class="col-sm-8 focus-no-padding">
+                <p-dropdown [style]="{'width':'100%'}" [options]="visastats" formControlName="visastatus"
+                            [filter]="true"></p-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group div-margin-top-40">
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-4 focus-no-padding">
+                <button type="submit" class="btn btn-success btn-block cust-btn">
+                  <i class="fa fa-floppy-o"></i> &nbsp;Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div [hidden]="edit">
+    <div class="form-horizontal">
+      <div class="row">
+        <div class="col-sm-11 col-sm-offset-1">
+          <div class="row flex_row">
+            <div class="col-sm-8 col_flex1">
+              <div class="row">
+                <div class="custom-row clearfix align-bottom">
+                  <div class="col-xs-4 alignment-right">
+                    <label class="control-label bold-label">Title Before:</label>
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="user-input">{{personalInfoForm.get('titlebefore').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                    href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                  </div>
+                </div>
+
+                <div class="custom-row clearfix align-bottom">
+                  <div class="col-xs-4 alignment-right">
+                    <label class="control-label bold-label">First Name:</label>
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="user-input">{{personalInfoForm.get('firstname').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                    href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                  </div>
+                </div>
+
+                <div class="custom-row clearfix align-bottom">
+                  <div class="col-xs-4 alignment-right">
+                    <label class="control-label bold-label">Middle Name:</label>
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="user-input">{{personalInfoForm.get('middlename').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                    href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                  </div>
+                </div>
+
+                <div class="custom-row clearfix align-bottom">
+                  <div class="col-xs-4 alignment-right">
+                    <label class="control-label bold-label">Last Name:</label>
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="user-input">{{personalInfoForm.get('lastname').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                    href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                  </div>
+                </div>
+
+                <div class="custom-row clearfix align-bottom">
+                  <div class="col-xs-4 alignment-right">
+                    <label class="control-label bold-label">Title After:</label>
+                  </div>
+                  <div class="col-xs-8">
+                    <span class="user-input">{{personalInfoForm.get('titleafter').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                    href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-sm-4 col_flex2">
+              <div class="user-pro-pic text-center">
+                <img src="assets/images/user150.png" class="img-responsive">
+                <a class="user-pic-link"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update your photo</a>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Prefered View Name:</label>
+                </div>
+                <div class="col-sm-8">
+                  <ng-container *ngIf="personalInfoForm.get('prefvname').value==='f'; else lfNameBlock">
+                    <label class="control-label">{{personalInfoForm.get('firstname').value}}&nbsp;{{personalInfoForm.get('lastname').value}}</label>
+                  </ng-container>
+                  <ng-template #lfNameBlock>
+                    <label class="control-label">{{personalInfoForm.get('lastname').value}}&nbsp;{{personalInfoForm.get('firstname').value}}</label>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Resume Title:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.get('resumetitle').value}}</span>
+                  &nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Gender:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.get('gender').value}}</span>&nbsp;&nbsp;&nbsp;<a href="#"
+                                                                                                               class="fa fa-pencil quick-edit quick-edit-none"
+                                                                                                               aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Marital Status:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.get('maritalstatus').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                  href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Nationality:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.controls.nationalities.controls[0].get('nationality').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                  href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Additional Nationalities:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input"
+                        *ngFor="let nat of personalInfoForm.controls['nationalities'].controls; let i=index"
+                        [hidden]="i==0"><span>{{nat.get('nationality').value}}</span><span
+                    *ngIf="i!=personalInfoForm.controls['nationalities'].controls.length-1">,&nbsp;</span></span>&nbsp;&nbsp;&nbsp;<a
+                  href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Date Of Birth:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.get('dateofbirth_year').value}}/{{personalInfoForm.get('dateofbirth_month').value}}/{{personalInfoForm.get('dateofbirth_day').value}}    Age : [{{currentYear-personalInfoForm.get('dateofbirth_year').value}} years]</span>&nbsp;&nbsp;&nbsp;<a
+                  href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Place Of Birth:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.get('cityofbirth').value}} , {{personalInfoForm.get('countryofbirth').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                  href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Current Location:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.get('currentcity').value}} , {{personalInfoForm.get('currentcountry').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                  href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-8">
+              <div class="row align-bottom">
+                <div class="col-xs-4 alignment-right">
+                  <label class="control-label bold-label">Visa Status:</label>
+                </div>
+                <div class="col-xs-8">
+                  <span class="user-input">{{personalInfoForm.get('visastatus').value}}</span>&nbsp;&nbsp;&nbsp;<a
+                  href="#" class="fa fa-pencil quick-edit quick-edit-none" aria-hidden="true"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group div-margin-top-40">
+            <div class="col-sm-8">
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-4 focus-no-padding">
+                  <button (click)="toggleEdit()" class="btn btn-success btn-block cust-btn">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> &nbsp; Edit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

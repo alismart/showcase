@@ -1,0 +1,425 @@
+<div class="interface main-padding right-col">
+  <form *ngIf="editable; else elseBlock" class="form-horizontal" [formGroup]="addForm">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <div class="primary-type">
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container has-feedback align-bottom">
+                <div class="col-lg-3 col-sm-2 alignment-right">
+                  <label class="control-label">Driving Licence</label>
+                </div>
+                <div class="col-lg-9 col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-3 col-xs-3 col-xxs-6">
+                      <input type="radio" formControlName="exist" [checked]="licenseExist" class="radio-focus rad-yes"
+                             name="exist" value="1"> Yes
+                    </div>
+                    <div class="col-sm-3 col-xs-3 col-xxs-6">
+                      <input type="radio" formControlName="exist" [checked]="intLicenseNotExist"
+                             class="radio-focus rad-no" name="exist" value="0"> No
+                    </div>
+                  </div>
+                  <span class="error-message"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--{{selectedValues | json}}-->
+          <div [hidden]="addForm.get('exist').value==false">
+            <div class="form-group">
+              <div class="col-lg-10 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Category</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10 div-margin-bottom-28">
+                    <div class="row">
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/A.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="AM"
+                                      data-toggle="tooltip"
+                                      title=">50cm3 &#10; >45 km/h &#10; (alt. max. 25kW - 0.16kW)" label="AM"> AM
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/A.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="A1"
+                                      data-toggle="tooltip"
+                                      title="max. 125cm3 &#10; max. 11kW &#10; 16< max. 80km/h <18" label="A1"> A1
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/A.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="A2"
+                                      data-toggle="tooltip"
+                                      title=">50cm3 &#10; >45 km/h &#10; (alt. max. 25kW - 0.16kW)" label="A2"> A2
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/A.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="A"
+                                      data-toggle="tooltip"
+                                      title=">50cm3 &#10; >45 km/h &#10; (alt. max. 25kW - 0.16kW)" label="A"> A
+                          </p-checkbox>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-9 col-sm-10 col-lg-offset-3 col-sm-offset-2 div-margin-bottom-28">
+                    <div class="row">
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/B.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="B1"
+                                      data-toggle="tooltip" title="max. 3.5t &#10; max. 8+1 &#10; <750kg" label="B1"> B1
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/B.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="B"
+                                      data-toggle="tooltip" title="max. 3.5t &#10; max. 8+1 &#10; <750kg" label="B"> B
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/BE.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="BE"
+                                      data-toggle="tooltip" title=" >750kg" label="BE"> BE
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-9 col-sm-10 col-lg-offset-3 col-sm-offset-2 div-margin-bottom-28">
+                    <div class="row">
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/C1.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="C1"
+                                      data-toggle="tooltip" title="> 3.5t. <7.5t &#10; max. 8+1 &#10; <750kg"
+                                      label="C1"> C1
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/C1E.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category"
+                                      value="C1E" data-toggle="tooltip" title=" >750kg &#10; max. 12t" label="C1E"> C1E
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/C.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="C"
+                                      data-toggle="tooltip" title=" <750kg" label="C"> C
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/CE.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="CE"
+                                      data-toggle="tooltip" title=" >750kg" label="CE"> CE
+                          </p-checkbox>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-9 col-sm-10 col-lg-offset-3 col-sm-offset-2 div-margin-bottom-28">
+                    <div class="row">
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/D1.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="D1"
+                                      data-toggle="tooltip" title="< 750 kg &#10; max. 16+1" label="D1"> D1
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/D1E.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category"
+                                      value="D1E" data-toggle="tooltip" title="> 750 kg &#10; max. 16+1 &#10; max. 12t"
+                                      label="D1E"> D1E
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/D.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="D"
+                                      data-toggle="tooltip" title=" <750kg" label="D"> D
+                          </p-checkbox>
+                        </label>
+                      </div>
+                      <div class="col-xs-3">
+                        <img class="dl-icons" src="assets/images/drivingicons/DE.png">
+                        <label class="control-label licence-checkbox">
+                          <p-checkbox formControlName="category" [(ngModel)]="selectedValues" name="category" value="DE"
+                                      data-toggle="tooltip" title=" >750kg" label="DE"> DE
+                          </p-checkbox>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Country</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <p-dropdown [options]="countries" formControlName="country" [style]="{'width':'100%'}"
+                                placeholder="select country" [filter]="true">
+                      <ng-template let-nat pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                          <img src="assets/countries/{{nat.value}}.gif"
+                               style="width:24px;position:absolute;top:1px;left:5px"/>
+                          <div style="font-size:14px;float:right;margin-top:4px">{{nat.label}}</div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                    <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Valid For</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <p-dropdown formControlName="valid_year" [options]="years" placeholder="YYYY"
+                                    [style]="{'width':'100%'}"></p-dropdown>
+                      </div>
+                      <div class="col-xs-6">
+                        <p-dropdown formControlName="valid_month" [options]="months" placeholder="MM"
+                                    [style]="{'width':'100%'}"></p-dropdown>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 col-xs-3 col-xxs-5 alignment-right">
+                    <label class="control-label">Upload</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10 col-xs-9 col-xxs-7">
+                    <button class="btn btn-primary">
+                      <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <br>
+        <hr>
+        <br><br>
+
+        <div class="primary-type">
+          <div class="form-group">
+            <div class="col-lg-10 col-sm-12">
+              <div class="row focus-container align-bottom">
+                <div class="col-lg-3 col-sm-2 alignment-right">
+                  <label class="control-label">International Licence</label>
+                </div>
+                <div class="col-lg-9 col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-3 col-xs-3 col-xxs-6">
+                      <input formControlName="int_exist" type="radio" [checked]="intLicenseExist"
+                             class="radio-focus rad-yes" name="int_exist" value="1"> Yes
+                    </div>
+                    <div class="col-sm-3 col-xs-3 col-xxs-6">
+                      <input formControlName="int_exist" type="radio" [checked]="intLicenseNotExist"
+                             class="radio-focus rad-no" name="int_exist" value="0"> No
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div [hidden]="addForm.get('int_exist').value==false">
+            <div class="form-group">
+              <div class="col-lg-10 col-sm-12">
+                <div class="row focus-container has-feedback">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Country</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <p-dropdown [options]="countries" formControlName="int_country" [style]="{'width':'100%'}"
+                                placeholder="select country" [filter]="true">
+                      <ng-template let-nat pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                          <img src="assets/countries/{{nat.value}}.gif"
+                               style="width:24px;position:absolute;top:1px;left:5px"/>
+                          <div style="font-size:14px;float:right;margin-top:4px">{{nat.label}}</div>
+                        </div>
+                      </ng-template>
+                    </p-dropdown>
+                    <span class="glyphicon  form-control-feedback" aria-hidden="true"></span>
+                    <span class="error-message"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 alignment-right">
+                    <label class="control-label">Valid For</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <p-dropdown formControlName="int_valid_year" [options]="years" placeholder="YYYY"
+                                    [style]="{'width':'100%'}"></p-dropdown>
+                      </div>
+                      <div class="col-xs-6">
+                        <p-dropdown formControlName="int_valid_month" [options]="months" placeholder="MM"
+                                    [style]="{'width':'100%'}"></p-dropdown>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-sm-12">
+                <div class="row focus-container">
+                  <div class="col-lg-3 col-sm-2 col-xs-3 col-xxs-5 alignment-right">
+                    <label class="control-label">Upload</label>
+                  </div>
+                  <div class="col-lg-9 col-sm-10 col-xs-9 col-xxs-7">
+                    <button class="btn btn-primary">
+                      <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!--<div class="form-group div-margin-top-70">-->
+        <!--<div class="col-lg-12 col-sm-12">-->
+        <!--<div class="row">-->
+        <!--<div class="col-sm-12 text-center">-->
+        <!--<button (click)="add()" class="btn btn-success btn-block cust-btn">-->
+        <!--<i class="fa fa-floppy-o"></i> &nbsp;Save-->
+        <!--</button>-->
+        <!--&nbsp;-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="form-group div-margin-top-70">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <button type="button" (click)="add()" class="btn btn-success btn-block cust-btn">
+                  <i class="fa fa-floppy-o"></i> &nbsp;Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template #elseBlock>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-3 col-xs-4 col-xxs-12">
+            <p class="col-txt-right">Driving Licence</p>
+          </div>
+          <div *ngIf="license.exist" class="col-sm-8 col-xs-8 col-xxs-12">
+            <p><span class="secondaryp">( </span><span *ngFor="let x of selectedValues; let k=index">{{x}} <span
+              class="secondaryp" [hidden]="k==selectedValues.length-1">,</span> </span><span
+              class="secondaryp"> ) From</span> {{license.country}}</p>   <!-- Category , Country  -->
+            <p><span class="secondaryp">Valid For</span> {{license.valid_date|date:'MM/yyyy'}}</p>  <!-- Valid for -->
+          </div>
+          <div *ngIf="!license.exist" class="col-sm-8 col-xs-8 col-xxs-12">
+            <i>None</i>
+          </div>
+        </div>
+
+        <hr>
+        <br>
+
+        <div class="row">
+          <div class="col-sm-3 col-xs-4 col-xxs-12">
+            <p class="col-txt-right">International Licence</p>
+          </div>
+          <div *ngIf="license.int_exist" class="col-sm-8 col-xs-8 col-xxs-12">
+            <p><span class="secondaryp">From </span> {{license.int_country}}</p>   <!-- Country  -->
+            <p><span class="secondaryp">Valid For</span> {{license.int_valid_date|date:'MM/yyyy'}}</p>
+            <!-- Valid for -->
+          </div>
+          <div *ngIf="!license.int_exist" class="col-sm-8 col-xs-8 col-xxs-12">
+            <i>None</i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="form-group div-margin-top-40">
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-5 focus-no-padding">
+            <button type="button" (click)="editPreview()" class="btn btn-warning btn-block cust-btn">
+              <i class="fa fa-pencil-square-o"></i> &nbsp;Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
+
